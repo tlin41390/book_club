@@ -15,15 +15,33 @@ class BookCubit extends Cubit<BookState> {
       await Future.delayed(const Duration(seconds: 2));
 
       final book = [
-        const Book(title: 'Catcher in the Rye', author: 'JD Sallinger', description: 'abc'),
-        const Book(title: 'MoneyBall', author: 'Michael Lewis', description:'basebol'),
-        const Book(title: 'Lord of the Rings', author: "J.R.R Tolkien ", description:"magic"),
-        const Book(title: 'The Great Gatsby', author: 'F. Scott. Fitzgerald', description:"wealth"),
+        const Book(title: 'Catcher in the Rye', author: 'JD Sallinger', description: 'abc',imageURL: '../../assets/catcher_in_the_rye.jpg'),
+        const Book(title: 'MoneyBall', author: 'Michael Lewis', description:'basebol',imageURL: '../../assets/money_ball.jpg'),
+        const Book(title: 'Lord of the Rings', author: "J.R.R Tolkien ", description:"magic",imageURL: '../../assets/money_ball.jpg'),
+        const Book(title: 'The Great Gatsby', author: 'F. Scott. Fitzgerald', description:"wealth",
+        imageURL:'../../assets/money_ball.jpg'),
       ];  
 
       emit(BookLoaded(book));
     } catch (e) {
       emit(BookError('Failed to load books: $e'));
+    }
+  }
+  void sortByTitle() {
+    if (state is BookLoaded) {
+      final book = (state as BookLoaded).books;
+      emit(BookLoaded(
+        List.from(book)..sort((a, b) => a.title.compareTo(b.title)),
+      ));
+    }
+  }
+
+  void sortByAuthor() {
+    if (state is BookLoaded) {
+      final book = (state as BookLoaded).books;
+      emit(BookLoaded(
+        List.from(book)..sort((a, b) => a.author.compareTo(b.author)),
+      ));
     }
   }
 }
