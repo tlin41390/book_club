@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import '../cubit/book_cubit.dart';
 import '../models/book.dart';
 
 class BookDetailScreen extends StatelessWidget {
@@ -8,19 +6,41 @@ class BookDetailScreen extends StatelessWidget {
   const BookDetailScreen({super.key, required this.book});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(book.title)),
-      body: Center(child: Column(mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        CircleAvatar(
-          radius: 60,
-          backgroundImage: NetworkImage(book.imageURL),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Hero(
+              tag: 'book-image-${book.title}',
+              child: Container(
+                width: 150,
+                height: 200,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/${book.imageURL}'),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: BorderRadius.circular(8),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      offset: Offset(0, 4),
+                      blurRadius: 5,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 0),
+            Text('Title: ${book.title}'),
+            Text('Author: ${book.author}'),
+            Text('Description: ${book.description}'),
+          ],
         ),
-        const SizedBox(height:20),
-        Text('Title: ${book.title}'),Text('Author: ${book.author}'),
-        Text('Description: ${book.description}'),
-      ],),),
+      ),
     );
   }
 }

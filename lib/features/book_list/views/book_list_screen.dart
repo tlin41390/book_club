@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/book_cubit.dart';
 import '../models/book.dart';
+import '../views/book_detail_screen.dart';
 
 class SortButton extends StatelessWidget {
   final IconData icon;
@@ -12,7 +13,7 @@ class SortButton extends StatelessWidget {
   const SortButton({
     super.key,
     required this.icon,
-    required this.text, 
+    required this.text,
     required this.onPressed,
     this.isActive = false,
   });
@@ -23,9 +24,7 @@ class SortButton extends StatelessWidget {
       style: ElevatedButton.styleFrom(
         foregroundColor: isActive ? Colors.white : Colors.black87,
         backgroundColor: isActive ? Colors.blue : Colors.grey[200],
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       ),
       icon: Icon(icon, size: 18),
@@ -41,9 +40,7 @@ class BookListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Book List (Cubit)'),
-      ),
+      appBar: AppBar(title: const Text('Book List (Cubit)')),
       body: Column(
         children: [
           // Sorting controls
@@ -51,8 +48,10 @@ class BookListScreen extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: BlocBuilder<BookCubit, BookState>(
               builder: (context, state) {
-                final isTitleSorted = state is BookLoaded && _isListSortedByTitle(state.books);
-                final isAuthorSorted = state is BookLoaded && _isListSortedByAuthor(state.books);
+                final isTitleSorted =
+                    state is BookLoaded && _isListSortedByTitle(state.books);
+                final isAuthorSorted =
+                    state is BookLoaded && _isListSortedByAuthor(state.books);
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -114,16 +113,45 @@ bool _isListSortedByAuthor(List<Book> books) {
 
 Widget _buildBookList(List<Book> books, BuildContext context) {
   return ListView.builder(
+    scrollDirection: Axis.horizontal,
     itemCount: books.length,
     itemBuilder: (context, index) {
       final book = books[index];
-      return ListTile(
-        leading: CircleAvatar(child: Text(book.title[0])),
-        title: Text(book.title),
-        subtitle: Text(book.author),
-        onTap: () {
-          // Navigation logic here
-        },
+      return Container(
+        width: 160,
+        margin: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => BookDetailScreen(book: book),
+                    ),
+                  );
+                },
+                child: Hero(
+                  tag: 'book-image-${book.title}',
+                  child: Container(
+                    width: 140,
+                    height: 200,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage('assets/${book.imageURL}'),
+                      
+                      ),
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 8),
+          ],
+        ),
       );
     },
   );

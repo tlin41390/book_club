@@ -15,11 +15,11 @@ class BookCubit extends Cubit<BookState> {
       await Future.delayed(const Duration(seconds: 2));
 
       final book = [
-        const Book(title: 'Catcher in the Rye', author: 'JD Sallinger', description: 'abc',imageURL: '../../assets/catcher_in_the_rye.jpg'),
-        const Book(title: 'MoneyBall', author: 'Michael Lewis', description:'basebol',imageURL: '../../assets/money_ball.jpg'),
-        const Book(title: 'Lord of the Rings', author: "J.R.R Tolkien ", description:"magic",imageURL: '../../assets/money_ball.jpg'),
+        const Book(title: 'Catcher in the Rye', author: 'JD Sallinger', description: 'abc',imageURL: 'catcher_in_the_rye.jpg'),
+        const Book(title: 'MoneyBall', author: 'Michael Lewis', description:'basebol',imageURL: 'money_ball.jpg'),
+        const Book(title: 'Lord of the Rings', author: "J.R.R Tolkien ", description:"magic",imageURL: 'lord_of_the_rings.jpg'),
         const Book(title: 'The Great Gatsby', author: 'F. Scott. Fitzgerald', description:"wealth",
-        imageURL:'../../assets/money_ball.jpg'),
+        imageURL:'the_great_gatsby.jpg'),
       ];  
 
       emit(BookLoaded(book));
