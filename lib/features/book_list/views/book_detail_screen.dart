@@ -8,7 +8,7 @@ class BookDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(book.title)),
+      appBar: AppBar(title: Text("Book Description"),centerTitle: true,backgroundColor: Colors.brown[300],foregroundColor: Colors.white),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

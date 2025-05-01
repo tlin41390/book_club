@@ -40,7 +40,7 @@ class BookListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Book List (Cubit)')),
+      appBar: AppBar(title: const Text('Book Club ☕'),backgroundColor:Colors.brown[300],centerTitle: true,foregroundColor: Colors.white,),
       body: Column(
         children: [
           // Sorting controls
